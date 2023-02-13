@@ -33,7 +33,8 @@ class UpdateProjectRequest extends FormRequest
             "description" => "required|string",
             "cover_img" => "image",
             "github_link"=>"max:255",
-            "type_id"=>"exists:types,id"
+            "type_id"=>"exists:types,id",
+            "techs"=>"nullable|array|exists:technologies,id"
         ];
     }
 }

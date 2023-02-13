@@ -21,6 +21,16 @@
                         <li class="list-group-item">GitHub Link:  <a href="{{$project["github_link"]}}">{{$project["github_link"]}}</a></li>
                         <li class="list-group-item">Creato il: {{$project["created_at"]}}</li>
                         <li class="list-group-item">Modificato il: {{$project["updated_at"]}}</li>
+                        <li class="list-group-item">
+                            <div>Tecnologie Usate:</div>
+                            <ul class="list-group">
+                                @foreach ($project->technologies as $tech)
+                                <li class="list-group-item">{{$tech->name}}</li>
+                                    
+                                @endforeach
+
+                            </ul>
+                        </li>
                       </ul>
                     </div>
 

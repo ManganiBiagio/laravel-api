@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -31,7 +32,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types=Type::all();
-        return view("admin.project.create",compact("types"));
+        $techs=Technology::all();
+        return view("admin.project.create",compact("types","techs"));
     }
 
     /**
@@ -55,6 +57,11 @@ class ProjectController extends Controller
 
         $project=Project::create($data);
         $project->cover_img=$path;
+
+        if($request->has("techs")){
+            $project->technologies()->sync($data["techs"]);
+        }
+
         $project->save();
 
         return redirect()->route("admin.projects.show",$project->id);
@@ -81,7 +88,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types=Type::all();
-        return view("admin.project.edit",compact("project","types"));
+        $techs=Technology::all();
+        return view("admin.project.edit",compact("project","types","techs"));
     }
 
     /**
@@ -101,6 +109,9 @@ class ProjectController extends Controller
             $path=Storage::put("posts",$data["cover_img"]);
             Storage::delete($project->cover_img);
             $project->cover_img=$path;
+        }
+        if($request->has("techs")){
+            $project->technologies()->sync($data["techs"]);
         }
 
         $project->save();
@@ -122,6 +133,7 @@ class ProjectController extends Controller
         if($project->cover_img){
             Storage::delete($project->cover_img);
         }
+        $project->technologies()->detach();
         $project->delete();
         return redirect()->route("admin.projects.index");
     }

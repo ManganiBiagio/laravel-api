@@ -29,7 +29,7 @@
       @enderror  
       </div>
       <div class="mb-3">
-        <label class="form-label">Tipoliga</label>
+        <label class="form-label">Tipologia</label>
         <select class="form-select @error('type_id') is-invalid @enderror" name="type_id">
           <option></option>
           {{-- Per ogni elemento all'interno di $categories, stampo una option --}}
@@ -38,6 +38,24 @@
           @endforeach
         </select>
         @error('type_id')
+          <div class="invalid-feedback">
+            {{ $message }}
+          </div>
+        @enderror
+      </div>
+      <div class="mb-3">
+       
+        @foreach ($techs as $tech)
+          <div class="form-check form-check-inline @error('techs') is-invalid @enderror">
+            <input class="form-check-input @error('techs') is-invalid @enderror" type="checkbox"
+              id="tagCheckbox_{{ $loop->index }}" value="{{ $tech->id }}" name="techs[]"
+              
+              {{ $project->technologies->contains('id', $tech->id) ? 'checked' : '' }}>
+            <label class="form-check-label" for="tagCheckbox_{{ $loop->index }}">{{ $tech->name }} </label>
+          </div>
+        @endforeach
+
+        @error('techs')
           <div class="invalid-feedback">
             {{ $message }}
           </div>
