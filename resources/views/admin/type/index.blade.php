@@ -10,7 +10,7 @@
                 {{$msgError}}
            
                 <div class="mt-2 pt-2 border-top">
-                    <form action="{{ route('admin.types.destroy', ["type"=>$typeToDelete,"destroyAnyway"=>1]) }}" method="POST">
+                    <form action="{{ route('admin.types.destroy', ["type"=>$typeToDelete,"destroyAnyway"=>true]) }}" method="POST">
                         @csrf()
                         @method('delete')
 
@@ -34,7 +34,7 @@
 
 
 
-                                <form action="{{ route('admin.types.destroy', ["type"=>$type->id,"destroyAnyway"=>true]) }}" method="POST">
+                                <form action="{{ route('admin.types.destroy', ["type"=>$type->id,"destroyAnyway"=>false]) }}" method="POST">
                                     @csrf()
                                     @method('delete')
 

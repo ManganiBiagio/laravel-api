@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTypeRequest;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Spatie\LaravelIgnition\Recorders\DumpRecorder\Dump;
 
 class TypeController extends Controller
 {
@@ -91,15 +92,15 @@ class TypeController extends Controller
     {
         
         $id=(int) $request->type;
-        $request->input("destroyAnyway");
-        $destroyAnyway=$request->destroyAnyway;
+        
+        $destroyAnyway=$request->input("destroyAnyway");
         
         
         $typeToDelete=Type::findOrFail($id);
         $types=Type::all();
         if(!$typeToDelete->projects->isEmpty()){
             
-            if(is_null($destroyAnyway)){
+            if($destroyAnyway==false){
                 return view("admin.type.index",[
                     "types"=>$types,
                     "typeToDelete"=>$typeToDelete,
@@ -110,7 +111,16 @@ class TypeController extends Controller
                 
                 // qui dobbiamo cancellare l'associazione con i progetti nel db
                 // $typeToDelete->delete();
-                 return redirect()->route("admin.types.index");
+                foreach( $typeToDelete->projects as $project){
+                    
+                    $project->type_id=null;
+                    $project->save();
+
+                }
+    
+                
+                $typeToDelete->delete();
+                return redirect()->route("admin.types.index");
             }
         
             }
