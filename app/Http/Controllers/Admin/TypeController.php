@@ -111,9 +111,11 @@ class TypeController extends Controller
                 
                 // qui dobbiamo cancellare l'associazione con i progetti nel db
                 // $typeToDelete->delete();
+                // $typeToDelete->projects()->dissociate();
                 foreach( $typeToDelete->projects as $project){
+                    $project->type()->dissociate();
                     
-                    $project->type_id=null;
+                    // $project->type_id=null;
                     $project->save();
 
                 }
