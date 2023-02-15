@@ -42,6 +42,9 @@
         @enderror
       </div>
       <div class="mb-3">
+        <div>
+          Attori Presenti
+        </div>
         @foreach ($techs as $tech)
           <div class="form-check form-check-inline @error('techs') is-invalid @enderror">
           
