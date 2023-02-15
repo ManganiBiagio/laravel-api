@@ -14,7 +14,9 @@ class ProjectController extends Controller
         return response()->json($projects);
 
     }
-    public function show(){
+    public function show(Project $project){
+        $project->load("type","technologies");
+        return response()->json($project);
 
     }
 }
