@@ -14,7 +14,7 @@ class DashboardController extends Controller
 
         $users=User::all();
         $projects=Project::all();
-        $contacts=Contact::all();
+        $contacts=Contact::orderBy("id","desc")->get();
 
         return view("admin.dashboard",[
             "users"=>$users,
