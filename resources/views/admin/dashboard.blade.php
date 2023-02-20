@@ -22,6 +22,39 @@
     <div class="row justify-content-center mb-5">
         <div class="col-md-8">
             <div class="card">
+                <div class="card-header">Messaggi dagli utenti</div>
+
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Message</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($contacts as $contact )
+                            <tr>
+                              <th scope="row">{{$contact->id}}</th>
+                              <td>{{$contact->title}}</td>
+                              <td>{{$contact->email}}</td>
+                              <td>{{$contact->message}}</td>
+                            </tr>
+                           
+                                
+                            @endforeach
+                        </tbody>
+                      </table>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8">
+            <div class="card">
                 <div class="card-header">Utenti</div>
 
                 <div class="card-body">
